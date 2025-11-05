@@ -1,4 +1,6 @@
 Algoritmo "Sistema de Vendas"
+//
+//
 
 tipo produto = registro
    nome: caractere
@@ -9,14 +11,16 @@ fimregistro
 Var
    itens: vetor[1..5] de produto
    opcao: inteiro
+   hist_vendas: vetor [1..5] de inteiro
+   historico_vendas: vetor [1..5] de caractere
 
 
 Funcao pegarProxPosicaoVazia() : inteiro
 Var
    i : inteiro
 Inicio
-   Para i de 1 até 5 Faça
-      Se (itens[i].nome = "") Então
+   Para i de 1 ate 5 Faca
+      Se (itens[i].nome = "") Entao
          Retorne i
          Interrompa
       Fimse
@@ -68,8 +72,8 @@ Inicio
 
    encontrado <- falso
 
-   para i de 1 até 5 faça
-      se (itens[i].codigo = cod) então
+   para i de 1 ate 5 faca
+      se (itens[i].codigo = cod) entao
          escreval("Produto encontrado!")
          escreval()
          escreval("Nome | Código | Qnt | Val. Unit | Val. Total")
@@ -102,8 +106,8 @@ Inicio
    limpatela()
 
    escreval("# | Nome | Código | Qnt | Val. Unit | Val. Total")
-   para i de 1 até 5 faça
-      se (itens[i].nome <> "") então
+   para i de 1 ate 5 faca
+      se (itens[i].nome <> "") entao
          escreva(i)
          escreva(" | ", itens[i].nome)
          escreva(" | ", itens[i].codigo)
@@ -117,29 +121,38 @@ fimprocedimento
 
 procedimento venda()
 Var
-   cod, qntVendida, i: inteiro
+   cod, i: inteiro
+   qntVendida: vetor [1..5] de real
    valorVenda: real
    encontrado: logico
 
 Inicio
    limpatela()
+   
+   para i de 1 ate 5 faca
+      se (itens[i].qnt >= 10) entao
+         escreval(i)
+         escreval(" Nome: ", itens[i].nome)
+         escreval(" Quantidade: ", itens[i].qnt)
+         escreval(" Preço: ", itens[i].preco:0:2)
+         escreval(" Total: ", itens[i].total:0:2)
    escreval("Digite o código do produto: ")
    leia(cod)
    encontrado <- falso
 
-   para i de 1 até 5 faça
-      se (itens[i].codigo = cod) então
+   para i de 1 ate 5 faca
+      se (itens[i].codigo = cod) entao
          encontrado <- verdadeiro
          escreval("Produto encontrado: ", itens[i].nome)
          escreval("Quantidade do produto: ", itens[i].qnt)
          escreva("Digite a quantidade vendida: ")
-         leia(qntVendida)
+         leia(qntVendida[i])
 
-         se(qntVendida > itens[i].qnt) então
+         se(qntVendida[i] > itens[i].qnt) entao
             escreval("Erro: quantidade insuficiente em estoque.")
          senao
-            valorVenda <- qntVendida * itens[i].preco
-            itens[i].qnt <- itens[i].qnt - qntVendida
+            valorVenda <- qntVendida[i] * itens[i].preco
+            itens[i].qnt <- itens[i].qnt - qntVendida[i]
             itens[i].total <- itens[i].qnt * itens[i].preco
 
             escreval()
@@ -149,14 +162,16 @@ Inicio
          interrompa
       fimse
    fimpara
-   
-   se (encontrado = falso) então
-   escreval("Produto não encontrado!")
+
+   se (encontrado = falso) entao
+      escreval("Produto não encontrado!")
    fimse
-   
+
    escreval()
 
 fimprocedimento
+
+
 
 Inicio
 
@@ -190,7 +205,7 @@ Inicio
          limpatela()
          escreval("Opção inválida")
       fimescolha
-   até(opcao = 0)
+      ate(opcao = 0)
 
 
 
